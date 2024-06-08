@@ -111,7 +111,7 @@ const ListArea: React.FC<ListAreaProps> = ({ issues }) => {
     <div>
       <div
         onScroll={handleScroll}
-        style={{ height: "80vh", overflowY: "scroll" }}
+        style={{ height: "70vh", overflowY: "scroll" }}
       >
         <div className="grid grid-cols-4 gap-8 ">
           <div className="border border-[#5D6160] rounded p-4 ">
@@ -170,7 +170,7 @@ const ListArea: React.FC<ListAreaProps> = ({ issues }) => {
           </div>
         </div>
       </div>
-      {loading && <p>Loading more issues...</p>}
+      {loading && <p className="text-white text-xl  font-bold ">Loading more issues...</p>}
     </div>
   );
 };

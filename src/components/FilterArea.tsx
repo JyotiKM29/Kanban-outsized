@@ -1,4 +1,4 @@
-// src/components/FilterArea.tsx
+
 
 import React, { useState, useEffect } from 'react';
 import { IssueItem } from '../types';
@@ -18,30 +18,32 @@ const FilterArea: React.FC<FilterAreaProps> = ({ issues, onFilterChange, teamLis
   const [tag, setTag] = useState<string[]>([]);
 
   useEffect(() => {
+    const handleFilterChange = () => {
+      let filteredIssues = issues;
+  
+      if (category.length > 0) {
+        filteredIssues = filteredIssues.filter(issue => category.includes(issue.category));
+      }
+  
+      if (priority.length > 0) {
+        filteredIssues = filteredIssues.filter(issue => priority.includes(issue.priority));
+      }
+  
+      if (team.length > 0) {
+        filteredIssues = filteredIssues.filter(issue => team.includes(issue.team));
+      }
+  
+      if (tag.length > 0) {
+        filteredIssues = filteredIssues.filter(issue => tag.some(t => issue.tag.includes(t)));
+      }
+  
+      onFilterChange(filteredIssues);
+    };
+
     handleFilterChange();
   }, [category, priority, team, tag]);
 
-  const handleFilterChange = () => {
-    let filteredIssues = issues;
-
-    if (category.length > 0) {
-      filteredIssues = filteredIssues.filter(issue => category.includes(issue.category));
-    }
-
-    if (priority.length > 0) {
-      filteredIssues = filteredIssues.filter(issue => priority.includes(issue.priority));
-    }
-
-    if (team.length > 0) {
-      filteredIssues = filteredIssues.filter(issue => team.includes(issue.team));
-    }
-
-    if (tag.length > 0) {
-      filteredIssues = filteredIssues.filter(issue => tag.some(t => issue.tag.includes(t)));
-    }
-
-    onFilterChange(filteredIssues);
-  };
+  
 
   const handleMultiSelect = (setter: React.Dispatch<React.SetStateAction<string[]>>, value: string) => {
     setter(prev => {
@@ -148,7 +150,7 @@ const FilterArea: React.FC<FilterAreaProps> = ({ issues, onFilterChange, teamLis
       </div>
 
       <div className='grid grid-cols-9 border-t border-[#5D6160] p-4'>
-        <div className='col-span-8 flex gap-2 '>
+        <div className='col-span-8 flex gap-2  '>
           {category.length > 0 && category.map((item)=>(
             <span style={{ backgroundColor: 'rgba(8 ,145, 178 , 0.1)' }} className='text-cyan-600 mx-2 flex gap-2  py-2 px-4 rounded-full'> <X onClick={() => handleRemoveFilter('category', item)} /> {item}</span>
           ))}
@@ -156,7 +158,7 @@ const FilterArea: React.FC<FilterAreaProps> = ({ issues, onFilterChange, teamLis
           <span style={{ backgroundColor: 'rgba(147, 51, 234, 0.1)' }} className='text-purple-600/100 mx-2 flex gap-2  bg-purple-700  py-2 px-4 rounded-full'> <X onClick={() => handleRemoveFilter('priority', item)} />{item}</span>
           ))}
           {team.length > 0 && team.map((item)=>(
-            <span style={{ backgroundColor: 'rgba(234 ,88 ,12 , 0.1)' }} className='text-orange-600/100  mx-2flex gap-2  bg-orange-700  py-2 px-4 rounded-full'> <X onClick={() => handleRemoveFilter('team', item)} />{item}</span>
+            <span style={{ backgroundColor: 'rgba(234 ,88 ,12 , 0.1)' }} className='text-orange-600/100  mx-2 flex gap-2  bg-orange-700  py-2 px-4 rounded-full'> <X onClick={() => handleRemoveFilter('team', item)} />{item}</span>
           ))}
        
           {tag.length > 0 && tag.map((item)=>(
