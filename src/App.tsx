@@ -48,13 +48,17 @@ const App: React.FC = () => {
 
 const getUniqueTeamNames = (data: IssueItem[]): string[] => {
   const uniqueTeams = new Set<string>();
+  if (data) {
   data?.forEach(item => uniqueTeams.add(item.team));
+  }
   return Array.from(uniqueTeams);
 };
 
 const getUniqueTag = (data: IssueItem[]): string[] => {
   const tagsSet = new Set<string>();
+  if (data) {
   data?.forEach(item => item.tag.forEach(tag => tagsSet.add(tag)));
+  }
   return Array.from(tagsSet);
 };
 
